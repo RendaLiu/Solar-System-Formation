@@ -5,4 +5,4 @@
 
 还有两份论文pdf，大家可以找一找更好的模型——lrd
 
-5.24 添加了两套程序Accrete-master和Planet-formation-master，前者是原始的C参考程序+我标了一点注释；后者是我让cursor自动生成的python版本，我做了初步的校正，目前主流程是match的，但还没校正具体函数细节。
+5.24 添加了两套程序Accrete-master和Planet-formation-master，前者是原始的C参考程序+我标了一点注释；后者是我让cursor自动生成的python版本，我做了初步的校正，目前主流程是match的，但还没校正具体函数细节。————swz
