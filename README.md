@@ -4,3 +4,5 @@
 5.24：添加了两份文件celestial_bodies.py和main.py，前者中包含星云类和行星类两个类，内部有一些函数；后者中建了一个生成原行星的函数
 
 还有两份论文pdf，大家可以找一找更好的模型——lrd
+
+5.24 添加了两套程序Accrete-master和Planet-formation-master，前者是原始的C参考程序+我标了一点注释；后者是我让cursor自动生成的python版本，我做了初步的校正，目前主流程是match的，但还没校正具体函数细节。
