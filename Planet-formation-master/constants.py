@@ -4,7 +4,7 @@
 
 # 天文单位转换常数
 SOLAR_MASS_IN_GRAMS = 1.989e33
-EARTH_MASS_IN_GRAMS = 5.976e27
+EARTH_MASS_IN_GRAMS = 5.977e27
 EARTH_MASSES_PER_SOLAR_MASS = 332775.64
 KM_PER_AU = 1.496e8
 CM_PER_KM = 1e5
@@ -14,7 +14,7 @@ CM_PER_AU = 1.495978707e13  # 天文单位对应的厘米数
 # 物理常数
 GRAV_CONSTANT = 6.672e-8  # 引力常数，单位：dyne cm2/gram2
 MOLAR_GAS_CONST = 8314.41  # 气体常数，单位：g*m2/(sec2*K*mol)
-EARTH_ACCELERATION = 980.7  # 地球表面重力加速度，单位：cm/sec2
+EARTH_ACCELERATION = 981.0  # 地球表面重力加速度，单位：cm/sec2
 EARTH_EXOSPHERE_TEMP = 1273.0  # 地球外大气层温度，单位：开尔文
 EARTH_AXIAL_TILT = 23.45  # 地球自转轴倾角，单位：度
 DAYS_IN_A_YEAR = 365.25  # 一年中的天数
@@ -87,5 +87,10 @@ XENON = 131.3  # Xe
 
 # 其他常数
 INCREDIBLY_LARGE_NUMBER = 9.9999e37  # 用于特殊计算的极大数
+
+# 新增的原子量常数
+ATOMIC_HYDROGEN = 1.0    # H
+ATOMIC_NITROGEN = 14.0   # N
+ATOMIC_OXYGEN = 16.0     # O
 
 #

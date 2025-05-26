@@ -179,6 +179,7 @@ namespace Accrete
                 mass_density = Constants.K * temp_density / (1.0 + Math.Sqrt(crit_mass / last_mass) * (Constants.K - 1.0));
             if ((dust_band.outer_edge <= system.r_inner) || (dust_band.inner_edge >= system.r_outer))
                 return CollectDust(ref system, last_mass, a, e, crit_mass, dust_band.next_band);
+                
             Double bandwidth = system.r_outer - system.r_inner;
             Double temp1 = system.r_outer - dust_band.outer_edge;
             if (temp1 < 0.0)

@@ -8,13 +8,16 @@ class Planet:
         self.a = 0.0  # 半长轴（AU）
         self.e = 0.0  # 离心率
         self.mass = 0.0  # 质量（太阳质量）
+        self.orbit_zone = 0  # 轨道区域
         
         # 物理参数
         self.radius = 0.0  # 半径（km）
         self.density = 0.0  # 密度（g/cm³）
         self.escape_velocity = 0.0  # 逃逸速度（km/s）
         self.molecule_weight = 0.0  # 可保留的最小分子量
-        
+        self.rms_velocity = 0.0 
+        self.volatile_gas_inventory = 0.0
+        self.greenhouse_effect = False
         # 环境参数
         self.surface_accel = 0.0  # 表面加速度（cm/s²）
         self.surface_grav = 0.0  # 表面重力（地球重力）
@@ -34,5 +37,8 @@ class Planet:
         # 系统参数
         self.gas_giant = False  # 是否为气态巨行星
         self.resonant_period = False  # 是否处于轨道共振
+
+        #卫星链表 后续管理用到时再修改
+        self.bodies_orbiting = []
         self.next_planet = None  # 下一个行星
         self.first_moon = None  # 第一个卫星 

@@ -45,7 +45,7 @@ namespace Accrete
 
         // Accessors
         public static StellarType GetStellarTypeMass(Double mass)
-        {
+        {   //从后向前遍历，返回满足条件的最后一个元素
             return Builtin.LastOrDefault(s => mass <= s.mass);
         }
 

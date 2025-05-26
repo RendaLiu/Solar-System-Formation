@@ -120,8 +120,7 @@ class Environment:
     @staticmethod
     def inclination(system, orbital_radius):
         """计算轨道倾角"""
-        temp = math.pow(orbital_radius, 0.2) * system.random.uniform(EARTH_AXIAL_TILT * 0.6, 
-                                                                    EARTH_AXIAL_TILT * 1.4)
+        temp = math.pow(orbital_radius, 0.2) * system.random.About(EARTH_AXIAL_TILT, 0.4)
         return int(temp) % 360
 
     @staticmethod
@@ -158,72 +157,191 @@ class Environment:
     @staticmethod
     def greenhouse(zone, orbital_radius, greenhouse_radius):
         """计算温室效应"""
-        if orbital_radius < greenhouse_radius:
-            return True
-        return False
+        return (orbital_radius < greenhouse_radius) and (zone == 1)
 
     @staticmethod
     def vol_inventory(system, mass, escape_vel, rms_vel, stellar_mass, zone, greenhouse_effect):
         """计算挥发性气体库存"""
-        # 实现挥发性气体库存计算
-        pass
+        velocity_ratio = escape_vel / rms_vel
+        if velocity_ratio < GAS_RETENTION_THRESHOLD:
+            return 0.0
+            
+        if zone == 1:
+            proportion_const = 100000.0
+        elif zone == 2:
+            proportion_const = 75000.0
+        elif zone == 3:
+            proportion_const = 250.0
+        else:
+            proportion_const = 10.0
+            system.callback("Error: orbital zone not initialized correctly!\n")
+            
+        mass_in_earth_units = mass * EARTH_MASSES_PER_SOLAR_MASS
+        temp1 = (proportion_const * mass_in_earth_units) / stellar_mass
+        temp2 = system.random.About(temp1, 0.2)
+        
+        if greenhouse_effect:
+            return temp2
+        return temp2 / 100.0
 
     @staticmethod
     def pressure(volatile_gas_inventory, equatorial_radius, gravity):
         """计算表面压力"""
-        # 实现表面压力计算
-        pass
+        equatorial_radius = EARTH_RADIUS_IN_KM / equatorial_radius
+        return volatile_gas_inventory * gravity / math.pow(equatorial_radius, 2.0)
 
     @staticmethod
     def boiling_point(surface_pressure):
         """计算水的沸点"""
-        # 实现沸点计算
-        pass
+        surface_pressure_in_bars = surface_pressure / MILLIBARS_PER_BAR
+        return 1.0 / (math.log(surface_pressure_in_bars) / -5050.5 + 1.0 / 373.0)
 
     @staticmethod
     def hydrosphere_fraction(volatile_gas_inventory, planetary_radius):
         """计算水圈比例"""
-        # 实现水圈比例计算
-        pass
+        temp = (0.71 * volatile_gas_inventory / 1000.0) * math.pow(EARTH_RADIUS_IN_KM / planetary_radius, 2.0)
+        return min(1.0, temp)
 
     @staticmethod
     def cloud_fraction(surface_temp, smallest_mw_retained, equatorial_radius, hydrosphere_fraction):
         """计算云层覆盖比例"""
-        # 实现云层覆盖比例计算
-        pass
+        if smallest_mw_retained > WATER_VAPOR:
+            return 0.0
+            
+        surface_area = 4.0 * math.pi * math.pow(equatorial_radius, 2.0)
+        hydrosphere_mass = hydrosphere_fraction * surface_area * EARTH_WATER_MASS_PER_AREA
+        water_vapor_in_kg = (0.00000001 * hydrosphere_mass) * math.exp(Q2_36 * (surface_temp - 288.0))
+        fraction = CLOUD_COVERAGE_FACTOR * water_vapor_in_kg / surface_area
+        return min(1.0, fraction)
 
     @staticmethod
     def ice_fraction(hydrosphere_fraction, surface_temp):
         """计算冰层覆盖比例"""
-        # 实现冰层覆盖比例计算
-        pass
+        if surface_temp > 328.0:
+            surface_temp = 328.0
+            
+        temp = math.pow(((328.0 - surface_temp) / 90.0), 5.0)
+        if temp > (1.5 * hydrosphere_fraction):
+            temp = 1.5 * hydrosphere_fraction
+        return min(1.0, temp)
 
     @staticmethod
     def effective_temp(ecosphere_radius, orbital_radius, albedo):
         """计算有效温度"""
-        # 实现有效温度计算
-        pass
+        return math.sqrt(ecosphere_radius / orbital_radius) * math.pow((1.0 - albedo) / 0.7, 0.25) * EARTH_EFFECTIVE_TEMP
 
     @staticmethod
     def greenhouse_rise(optical_depth, effective_temp, surface_pressure):
         """计算温室效应升温"""
-        # 实现温室效应升温计算
-        pass
+        convection_factor = EARTH_CONVECTION_FACTOR * math.pow((surface_pressure / EARTH_SURF_PRES_IN_MILLIBARS), 0.25)
+        return (math.pow((1.0 + 0.75 * optical_depth), 0.25) - 1.0) * effective_temp * convection_factor
 
     @staticmethod
     def planet_albedo(system, water_fraction, cloud_fraction, ice_fraction, surface_pressure):
         """计算行星反照率"""
-        # 实现行星反照率计算
-        pass
+        rock_fraction = 1.0 - water_fraction - ice_fraction
+        components = 0.0
+        
+        if water_fraction > 0.0:
+            components += 1.0
+        if ice_fraction > 0.0:
+            components += 1.0
+        if rock_fraction > 0.0:
+            components += 1.0
+            
+        cloud_adjustment = cloud_fraction / components
+        
+        if rock_fraction >= cloud_adjustment:
+            rock_fraction -= cloud_adjustment
+        else:
+            rock_fraction = 0.0
+            
+        if water_fraction > cloud_adjustment:
+            water_fraction -= cloud_adjustment
+        else:
+            water_fraction = 0.0
+            
+        if ice_fraction > cloud_adjustment:
+            ice_fraction -= cloud_adjustment
+        else:
+            ice_fraction = 0.0
+            
+        cloud_contribution = cloud_fraction * system.random.About(CLOUD_ALBEDO, 0.2)
+        
+        if surface_pressure == 0.0:
+            rock_contribution = rock_fraction * system.random.About(AIRLESS_ROCKY_ALBEDO, 0.3)
+        else:
+            rock_contribution = rock_fraction * system.random.About(ROCKY_ALBEDO, 0.1)
+            
+        water_contribution = water_fraction * system.random.About(WATER_ALBEDO, 0.2)
+        
+        if surface_pressure == 0.0:
+            ice_contribution = ice_fraction * system.random.About(AIRLESS_ICE_ALBEDO, 0.4)
+        else:
+            ice_contribution = ice_fraction * system.random.About(ICE_ALBEDO, 0.1)
+            
+        return cloud_contribution + rock_contribution + water_contribution + ice_contribution
 
     @staticmethod
     def opacity(molecular_weight, surface_pressure):
         """计算不透明度"""
-        # 实现不透明度计算
-        pass
+        optical_depth = 0.0
+        
+        if 0.0 <= molecular_weight < 10.0:
+            optical_depth += 3.0
+        elif 10.0 <= molecular_weight < 20.0:
+            optical_depth += 2.34
+        elif 20.0 <= molecular_weight < 30.0:
+            optical_depth += 1.0
+        elif 30.0 <= molecular_weight < 45.0:
+            optical_depth += 0.15
+        elif 45.0 <= molecular_weight < 100.0:
+            optical_depth += 0.05
+            
+        if surface_pressure >= (70.0 * EARTH_SURF_PRES_IN_MILLIBARS):
+            optical_depth *= 8.333
+        elif surface_pressure >= (50.0 * EARTH_SURF_PRES_IN_MILLIBARS):
+            optical_depth *= 6.666
+        elif surface_pressure >= (30.0 * EARTH_SURF_PRES_IN_MILLIBARS):
+            optical_depth *= 3.333
+        elif surface_pressure >= (10.0 * EARTH_SURF_PRES_IN_MILLIBARS):
+            optical_depth *= 2.0
+        elif surface_pressure >= (5.0 * EARTH_SURF_PRES_IN_MILLIBARS):
+            optical_depth *= 1.5
+            
+        return optical_depth
 
     @staticmethod
     def iterate_surface_temp(system, planet):
         """迭代计算表面温度"""
-        # 实现表面温度迭代计算
-        pass 
+        albedo = 0.0
+        water = 0.0
+        clouds = 0.0
+        ice = 0.0
+
+        optical_depth = Environment.opacity(planet.molecule_weight, planet.surface_pressure)
+        effective_temp = Environment.effective_temp(system.r_ecosphere, planet.a, EARTH_ALBEDO)
+        greenhouse_rise = Environment.greenhouse_rise(optical_depth, effective_temp, planet.surface_pressure)
+        surface_temp = effective_temp + greenhouse_rise
+        previous_temp = surface_temp - 5.0
+
+        while abs(surface_temp - previous_temp) > 1.0:
+            previous_temp = surface_temp
+            water = Environment.hydrosphere_fraction(planet.volatile_gas_inventory, planet.radius)
+            clouds = Environment.cloud_fraction(surface_temp, planet.molecule_weight, planet.radius, water)
+            ice = Environment.ice_fraction(water, surface_temp)
+            
+            if surface_temp >= planet.boil_point or surface_temp <= FREEZING_POINT_OF_WATER:
+                water = 0.0
+                
+            albedo = Environment.planet_albedo(system, water, clouds, ice, planet.surface_pressure)
+            optical_depth = Environment.opacity(planet.molecule_weight, planet.surface_pressure)
+            effective_temp = Environment.effective_temp(system.r_ecosphere, planet.a, albedo)
+            greenhouse_rise = Environment.greenhouse_rise(optical_depth, effective_temp, planet.surface_pressure)
+            surface_temp = effective_temp + greenhouse_rise
+
+        planet.hydrosphere = water
+        planet.cloud_cover = clouds
+        planet.ice_cover = ice
+        planet.albedo = albedo
+        planet.surface_temp = surface_temp 

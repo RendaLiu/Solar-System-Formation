@@ -93,20 +93,30 @@ namespace Accrete
         private static void GenerateInternal(ref SolarSystem system, Int32 Count)
         {
             // Describe the star
+            //恒星质量比
             system.stellar_mass_ratio = system.random.Range(0.6, 1.3);
+            //半径比
             system.stellar_radius_ratio = Math.Floor(system.random.About(Math.Pow(system.stellar_mass_ratio, 1.0 / 3.0), 0.05) * 1000.0) / 1000.0;
+            //光度比
             system.stellar_luminosity_ratio = Enviro.Luminosity(system.stellar_mass_ratio);
+            //恒星表面温度
             system.stellar_temp = Math.Floor(5650 * Math.Sqrt(Math.Sqrt(system.stellar_luminosity_ratio) / system.stellar_radius_ratio));
+            //主序寿命
             system.main_seq_life = 1.0E10 * (system.stellar_mass_ratio / system.stellar_luminosity_ratio);
+            //根据主序星寿命确定系统年龄
             if (system.main_seq_life > 6.0E9)
                 system.age = system.random.Range(1.0E9, 6.0E9);
             else if (system.main_seq_life > 1.0E9)
                 system.age = system.random.Range(1.0E9, system.main_seq_life);
             else
                 system.age = system.random.Range(system.main_seq_life / 10, system.main_seq_life);
+            
             system.age = system.random.Range(1.0E9, (system.main_seq_life >= 6.0E9) ? 6.0E9 : system.main_seq_life);
+            //生态圈半径 根据光度比
             system.r_ecosphere = Math.Sqrt(system.stellar_luminosity_ratio);
+            //温室效应半径 根据生态圈半径
             system.r_greenhouse = system.r_ecosphere * Constants.GREENHOUSE_EFFECT_CONST;
+            //根据恒星表面温度确定恒星类型
             system.type = StellarType.GetStellarTypeTemp(system.stellar_temp);
 
             // Create the first Planet
@@ -115,38 +125,57 @@ namespace Accrete
             while (planet != null && i < Count)
             {
                 planet.orbit_zone = Enviro.OrbitalZone(system, planet.a);
+                //如果行星是气态巨行星
                 if (planet.gas_giant)
                 {
                     planet.density = Enviro.EmpiricalDensity(system, planet.mass, planet.a, planet.gas_giant);
                     planet.radius = Enviro.VolumeRadius(planet.mass, planet.density);
                 }
+                //如果行星是岩石行星
                 else
                 {
                     planet.radius = Enviro.KothariRadius(planet.mass, planet.a, planet.gas_giant, planet.orbit_zone);
                     planet.density = Enviro.VolumeRadius(planet.mass, planet.radius);
                 }
+                //轨道周期
                 planet.orbital_period = Enviro.Period(planet.a, planet.mass, system.stellar_mass_ratio);
+                //日长
                 planet.day = Enviro.DayLength(ref system, planet.mass, planet.radius, planet.orbital_period, planet.e, planet.gas_giant);
+                //共振周期
                 planet.resonant_period = system.spin_resonance;
+                //倾角
                 planet.axial_tilt = Enviro.Inclination(system, planet.a);
+                //逃逸速度
                 planet.escape_velocity = Enviro.EscapeVel(planet.mass, planet.radius);
+                //表面加速度
                 planet.surface_accel = Enviro.Acceleration(planet.mass, planet.radius);
+                //分子运动速度
                 planet.rms_velocity = Enviro.RmsVel(Constants.MOLECULAR_NITROGEN, planet.a);
+                //分子量限制
                 planet.molecule_weight = Enviro.MoleculeLimit(planet.a, planet.mass, planet.radius);
+                //如果行星是气态巨行星
                 if ((planet.gas_giant))
                 {
                     planet.greenhouse_effect = false;
                     planet.hydrosphere = Constants.INCREDIBLY_LARGE_NUMBER;
                     planet.albedo = system.random.About(Constants.GAS_GIANT_ALBEDO, 0.1);
                 }
+                //行星环境特性
+                //表面重力
                 planet.surface_grav = Enviro.Gravity(planet.surface_accel);
+                //温室效应
                 planet.greenhouse_effect = Enviro.Greenhouse(planet.orbit_zone, planet.a, system.r_greenhouse);
+                //可挥发气体库存
                 planet.volatile_gas_inventory = Enviro.VolInventory(system, planet.mass, planet.escape_velocity, planet.rms_velocity, system.stellar_mass_ratio, planet.orbit_zone, planet.greenhouse_effect);
+                //表面压力
                 planet.surface_pressure = Enviro.pressure(planet.volatile_gas_inventory, planet.radius, planet.surface_grav);
+                //沸点
                 planet.boil_point = (planet.surface_pressure == 0.0) ? 0.0 : Enviro.BoilingPoint(planet.surface_pressure);
+                //迭代表面温度
                 Enviro.IterateSurfaceTemp(system, ref planet);
 
                 // Moons
+                //生成卫星
                 if (system.moons)
                 {
                     planet.first_moon = Accretation.DistributeMoonMasses(ref system, planet.mass, planet.radius);
