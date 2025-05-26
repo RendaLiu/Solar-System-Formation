@@ -9,4 +9,4 @@
 
 5.25 看了下wiki百科抄了些背景资料，初步拟了报告的第一部分。同步上传了报告的文件夹，包含tex文件和images。————swz
 
-5.26 校验了python程序，主流程在solar_system.py中的generate函数中，可能还会有微小的bug没有校验出来，其他函数都校验完毕。————swz
+5.26 校验了python程序，主流程在solar_system.py中的generate函数中，可能还会有微小的bug没有校验出来，其他函数都校验完毕。目前Planet-formation-master的主函数main已经能够正常运行，未检查结果。————swz

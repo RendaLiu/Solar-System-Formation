@@ -120,8 +120,8 @@ class Environment:
     @staticmethod
     def inclination(system, orbital_radius):
         """计算轨道倾角"""
-        temp = math.pow(orbital_radius, 0.2) * system.random.About(EARTH_AXIAL_TILT, 0.4)
-        return int(temp) % 360
+        temp = math.pow(orbital_radius, 0.2) * system.random_about(EARTH_AXIAL_TILT, 0.4)
+        return temp
 
     @staticmethod
     def escape_velocity(mass, radius):
@@ -178,7 +178,7 @@ class Environment:
             
         mass_in_earth_units = mass * EARTH_MASSES_PER_SOLAR_MASS
         temp1 = (proportion_const * mass_in_earth_units) / stellar_mass
-        temp2 = system.random.About(temp1, 0.2)
+        temp2 = system.random_about(temp1, 0.2)
         
         if greenhouse_effect:
             return temp2
@@ -266,19 +266,19 @@ class Environment:
         else:
             ice_fraction = 0.0
             
-        cloud_contribution = cloud_fraction * system.random.About(CLOUD_ALBEDO, 0.2)
+        cloud_contribution = cloud_fraction * system.random_about(CLOUD_ALBEDO, 0.2)
         
         if surface_pressure == 0.0:
-            rock_contribution = rock_fraction * system.random.About(AIRLESS_ROCKY_ALBEDO, 0.3)
+            rock_contribution = rock_fraction * system.random_about(AIRLESS_ROCKY_ALBEDO, 0.3)
         else:
-            rock_contribution = rock_fraction * system.random.About(ROCKY_ALBEDO, 0.1)
+            rock_contribution = rock_fraction * system.random_about(ROCKY_ALBEDO, 0.1)
             
-        water_contribution = water_fraction * system.random.About(WATER_ALBEDO, 0.2)
+        water_contribution = water_fraction * system.random_about(WATER_ALBEDO, 0.2)
         
         if surface_pressure == 0.0:
-            ice_contribution = ice_fraction * system.random.About(AIRLESS_ICE_ALBEDO, 0.4)
+            ice_contribution = ice_fraction * system.random_about(AIRLESS_ICE_ALBEDO, 0.4)
         else:
-            ice_contribution = ice_fraction * system.random.About(ICE_ALBEDO, 0.1)
+            ice_contribution = ice_fraction * system.random_about(ICE_ALBEDO, 0.1)
             
         return cloud_contribution + rock_contribution + water_contribution + ice_contribution
 

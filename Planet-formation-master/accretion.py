@@ -269,33 +269,23 @@ class Accretion:
 
     @staticmethod
     def distribute_planetary_masses(system, stellar_mass_ratio, stellar_luminosity_ratio, inner_dust, outer_dust):
-        """分配行星质量
-        主要行星形成过程：
-        1. 设置初始条件
-        2. 循环注入原行星
-        3. 执行吸积和合并
-        """
-        # 设置初始条件
-        Accretion.set_initial_conditions(system, inner_dust, outer_dust)
+        """分配行星质量"""
+        # 设置初始参数
+        planetesimal_inner_bound = inner_dust
+        planetesimal_outer_bound = outer_dust
         
-        # 计算行星形成边界
-        planetesimal_inner_bound = Accretion.innermost_planet(stellar_mass_ratio)
-        planetesimal_outer_bound = Accretion.outermost_planet(stellar_mass_ratio)
-        
-        # 循环注入原行星
-        while system.dust_left:
-            # 随机选择轨道参数
-            a = system.random.range(planetesimal_inner_bound, planetesimal_outer_bound)
-            e = system.random.eccentricity()
-            mass = PROTOPLANET_MASS
+        while Accretion.dust_available(system, inner_dust, outer_dust):
+            # 随机生成位置和质量
+            a = system.random_range(planetesimal_inner_bound, planetesimal_outer_bound)
+            e = system.random_eccentricity()
             
             if system.verbose:
                 system.callback(f"Checking {a} AU.\n")
                 
             # 检查范围内是否有可用尘埃
             if not Accretion.dust_available(system, 
-                                          Accretion.inner_effect_limit(system, a, e, mass),
-                                          Accretion.outer_effect_limit(system, a, e, mass)):
+                                          Accretion.inner_effect_limit(system, a, e, PROTOPLANET_MASS),
+                                          Accretion.outer_effect_limit(system, a, e, PROTOPLANET_MASS)):
                 if system.verbose:
                     system.callback(".. failed.\n")
                 continue
@@ -309,7 +299,7 @@ class Accretion:
             crit_mass = Accretion.critical_limit(a, e, stellar_luminosity_ratio)
             
             # 执行吸积过程
-            mass = Accretion.accrete_dust(system, mass, a, e, crit_mass, 
+            mass = Accretion.accrete_dust(system, PROTOPLANET_MASS, a, e, crit_mass, 
                                         planetesimal_inner_bound, planetesimal_outer_bound)
             
             # 检查是否需要合并
@@ -327,7 +317,7 @@ class Accretion:
     def distribute_moon_masses(system, planetary_mass, plan_radius):
         """为行星生成卫星系统"""
         # 转换单位
-        pmass = planetary_mass * SUN_MASS_IN_EARTH_MASSES
+        pmass = planetary_mass * EARTH_MASSES_PER_SOLAR_MASS
         prad = plan_radius / KM_PER_AU
         
         # 计算卫星系统参数
@@ -365,7 +355,7 @@ class Accretion:
             
             # 创建卫星
             moon = Planet()
-            moon.mass = mass / SUN_MASS_IN_EARTH_MASSES
+            moon.mass = mass / EARTH_MASSES_PER_SOLAR_MASS
             moon.a = system.random.range(lastrad, lastrad * 1.3)
             lastrad = moon.a + dist
             moon.e = system.random.eccentricity()

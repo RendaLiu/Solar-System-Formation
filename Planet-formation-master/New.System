@@ -1,0 +1,308 @@
+                         SYSTEM  CHARACTERISTICS
+Mass of central star:          0.757 solar masses
+Luminosity of central star:    0.288 (relative to the sun)
+Total main sequence lifetime:  26298 million years
+Current age of stellar system: 2124 million years
+Radius of habitable ecosphere: 0.537 AU
+
+Planet #1:
+   Distance from primary star (in A.U.): 0.312
+   Eccentricity of orbit:                0.031
+   Mass (in Earth masses):               0.006
+   Equatorial radius (in Km):            1203.3
+   Density (in g/cc):                    5.252
+   Escape Velocity (in km/sec):          2.06
+   Smallest molecular weight retained:   186.74
+   Surface acceleration (in cm/sec2):    176.63
+   Surface Gravity (in Earth gees):      0.18
+   Surface temperature (Celcius):        86.66
+   Axial tilt (in degrees):              19.532873857792723
+   Planetary albedo:                     0.066
+   Length of year (in years):            0.20
+   Length of day (in hours):             36.06
+
+Planet #2:
+   Distance from primary star (in A.U.): 0.397
+   Eccentricity of orbit:                0.083
+   Mass (in Earth masses):               0.074
+   Equatorial radius (in Km):            2713.3
+   Density (in g/cc):                    5.279
+   Escape Velocity (in km/sec):          4.66
+   Smallest molecular weight retained:   36.55   (Ar)
+   Surface acceleration (in cm/sec2):    400.27
+   Surface Gravity (in Earth gees):      0.41
+   Surface temperature (Celcius):        45.40
+   Axial tilt (in degrees):              16.07761003269894
+   Planetary albedo:                     0.069
+   Length of year (in years):            0.29
+   Length of day (in hours):             23.95
+
+Planet #3:
+   Distance from primary star (in A.U.): 0.543
+   Eccentricity of orbit:                0.052
+   Mass (in Earth masses):               0.083
+   Equatorial radius (in Km):            2825.5
+   Density (in g/cc):                    5.281
+   Escape Velocity (in km/sec):          4.85
+   Smallest molecular weight retained:   33.68   (H2S)
+   Surface acceleration (in cm/sec2):    417.04
+   Surface Gravity (in Earth gees):      0.43
+   Surface temperature (Celcius):        -1.11
+   Axial tilt (in degrees):              19.347532067562277
+   Planetary albedo:                     0.075
+   Length of year (in years):            0.46
+   Length of day (in hours):             23.47
+
+Planet #4:
+   Distance from primary star (in A.U.): 0.713
+   Eccentricity of orbit:                0.091
+   Mass (in Earth masses):               0.164
+   Equatorial radius (in Km):            3535.7
+   Density (in g/cc):                    5.302
+   Escape Velocity (in km/sec):          6.09
+   Smallest molecular weight retained:   21.43   (N2)
+   Surface acceleration (in cm/sec2):    523.87
+   Surface Gravity (in Earth gees):      0.53
+   Surface temperature (Celcius):        -35.94
+   Axial tilt (in degrees):              23.832404478763245
+   Planetary albedo:                     0.077
+   Length of year (in years):            0.69
+   Length of day (in hours):             20.94
+
+Planet #5:
+   Distance from primary star (in A.U.): 0.951
+   Eccentricity of orbit:                0.099
+   Mass (in Earth masses):               1.504
+   Equatorial radius (in Km):            7310.4
+   Density (in g/cc):                    5.492
+   Escape Velocity (in km/sec):          12.81
+   Smallest molecular weight retained:   4.84   (CH4)
+   Surface acceleration (in cm/sec2):    1122.15
+   Surface Gravity (in Earth gees):      1.14
+   Boiling point of water (celcius):     131.6
+   Surface Pressure (in atmospheres):    2.880
+   Surface temperature (Celcius):        -88.33
+   Ice cover percentage:                 100.00
+   Axial tilt (in degrees):              26.859820425361104
+   Planetary albedo:                     0.701
+   Length of year (in years):            1.07
+   Length of day (in hours):             14.31
+
+Planet #6:
+   Distance from primary star (in A.U.): 1.825
+   Eccentricity of orbit:                0.078
+   Mass (in Earth masses):               0.317
+   Equatorial radius (in Km):            4392.3
+   Density (in g/cc):                    5.332
+   Escape Velocity (in km/sec):          7.58
+   Smallest molecular weight retained:   13.80   (CH4)
+   Surface acceleration (in cm/sec2):    654.58
+   Surface Gravity (in Earth gees):      0.67
+   Boiling point of water (celcius):     51.7
+   Surface Pressure (in atmospheres):    0.133
+   Surface temperature (Celcius):        -148.11
+   Ice cover percentage:                 94.72
+   Axial tilt (in degrees):              28.979395141247792
+   Planetary albedo:                     0.651
+   Length of year (in years):            2.83
+   Length of day (in hours):             18.73
+
+Planet #7:
+Gas giant...
+   Distance from primary star (in A.U.): 2.161
+   Eccentricity of orbit:                0.067
+   Mass (in Earth masses):               8.745
+   Equatorial radius (in Km):            22396.2
+   Density (in g/cc):                    1.111
+   Escape Velocity (in km/sec):          17.65
+   Smallest molecular weight retained:   2.55   (He)
+   Surface acceleration (in cm/sec2):    695.26
+   Axial tilt (in degrees):              29.894091819630603
+   Planetary albedo:                     0.488
+   Length of year (in years):            3.65
+   Length of day (in hours):             15.50
+
+Planet #8:
+   Distance from primary star (in A.U.): 3.629
+   Eccentricity of orbit:                0.045
+   Mass (in Earth masses):               1.852
+   Equatorial radius (in Km):            10378.4
+   Density (in g/cc):                    2.364
+   Escape Velocity (in km/sec):          11.93
+   Smallest molecular weight retained:   5.58   (CH4)
+   Surface acceleration (in cm/sec2):    685.59
+   Surface Gravity (in Earth gees):      0.70
+   Boiling point of water (celcius):     137.7
+   Surface Pressure (in atmospheres):    3.467
+   Surface temperature (Celcius):        -169.73
+   Ice cover percentage:                 75.35
+   Axial tilt (in degrees):              27.98138583019463
+   Planetary albedo:                     0.586
+   Length of year (in years):            7.94
+   Length of day (in hours):             18.30
+
+Planet #9:
+Gas giant...
+   Distance from primary star (in A.U.): 5.772
+   Eccentricity of orbit:                0.024
+   Mass (in Earth masses):               194.376
+   Equatorial radius (in Km):            60057.5
+   Density (in g/cc):                    1.280
+   Escape Velocity (in km/sec):          50.81
+   Smallest molecular weight retained:   0.31   (H2)
+   Surface acceleration (in cm/sec2):    2149.06
+   Axial tilt (in degrees):              31.556063637510658
+   Planetary albedo:                     0.481
+   Length of year (in years):            15.93
+   Length of day (in hours):             8.82
+
+Planet #10:
+Gas giant...
+   Distance from primary star (in A.U.): 9.303
+   Eccentricity of orbit:                0.047
+   Mass (in Earth masses):               72.676
+   Equatorial radius (in Km):            46905.8
+   Density (in g/cc):                    1.005
+   Escape Velocity (in km/sec):          35.15
+   Smallest molecular weight retained:   0.64   (H2)
+   Surface acceleration (in cm/sec2):    1317.27
+   Axial tilt (in degrees):              39.836046108706924
+   Planetary albedo:                     0.496
+   Length of year (in years):            32.61
+   Length of day (in hours):             11.26
+
+Planet #11:
+Gas giant...
+   Distance from primary star (in A.U.): 18.718
+   Eccentricity of orbit:                0.056
+   Mass (in Earth masses):               5.588
+   Equatorial radius (in Km):            23528.0
+   Density (in g/cc):                    0.612
+   Escape Velocity (in km/sec):          13.76
+   Smallest molecular weight retained:   4.19   (CH4)
+   Surface acceleration (in cm/sec2):    402.59
+   Axial tilt (in degrees):              43.27581436732555
+   Planetary albedo:                     0.503
+   Length of year (in years):            93.07
+   Length of day (in hours):             20.37
+
+Planet #12:
+Gas giant...
+   Distance from primary star (in A.U.): 29.249
+   Eccentricity of orbit:                0.066
+   Mass (in Earth masses):               3.684
+   Equatorial radius (in Km):            21625.0
+   Density (in g/cc):                    0.520
+   Escape Velocity (in km/sec):          11.66
+   Smallest molecular weight retained:   5.84   (CH4)
+   Surface acceleration (in cm/sec2):    314.16
+   Axial tilt (in degrees):              38.03474442856444
+   Planetary albedo:                     0.505
+   Length of year (in years):            181.80
+   Length of day (in hours):             23.06
+
+Planet #13:
+   Distance from primary star (in A.U.): 35.109
+   Eccentricity of orbit:                0.018
+   Mass (in Earth masses):               0.018
+   Equatorial radius (in Km):            2273.2
+   Density (in g/cc):                    2.194
+   Escape Velocity (in km/sec):          2.52
+   Smallest molecular weight retained:   125.29   (Xe)
+   Surface acceleration (in cm/sec2):    139.37
+   Surface Gravity (in Earth gees):      0.14
+   Boiling point of water (celcius):     -88.1
+   Surface Pressure (in atmospheres):    0.000
+   Surface temperature (Celcius):        -239.88
+   Axial tilt (in degrees):              48.51108255566392
+   Planetary albedo:                     0.148
+   Length of year (in years):            239.09
+   Length of day (in hours):             40.60
+
+Planet #14:
+   Distance from primary star (in A.U.): 55.282
+   Eccentricity of orbit:                0.048
+   Mass (in Earth masses):               0.074
+   Equatorial radius (in Km):            3627.5
+   Density (in g/cc):                    2.206
+   Escape Velocity (in km/sec):          4.03
+   Smallest molecular weight retained:   48.92   (SO2)
+   Surface acceleration (in cm/sec2):    223.65
+   Surface Gravity (in Earth gees):      0.23
+   Boiling point of water (celcius):     -66.8
+   Surface Pressure (in atmospheres):    0.000
+   Surface temperature (Celcius):        -246.59
+   Axial tilt (in degrees):              56.6925022143176
+   Planetary albedo:                     0.146
+   Length of year (in years):            472.39
+   Length of day (in hours):             32.05
+
+Planet #15:
+   Distance from primary star (in A.U.): 91.149
+   Eccentricity of orbit:                0.046
+   Mass (in Earth masses):               0.006
+   Equatorial radius (in Km):            1550.9
+   Density (in g/cc):                    2.189
+   Escape Velocity (in km/sec):          1.72
+   Smallest molecular weight retained:   269.69
+   Surface acceleration (in cm/sec2):    94.90
+   Surface Gravity (in Earth gees):      0.10
+   Boiling point of water (celcius):     -102.3
+   Surface Pressure (in atmospheres):    0.000
+   Surface temperature (Celcius):        -252.43
+   Axial tilt (in degrees):              59.16447140210881
+   Planetary albedo:                     0.145
+   Length of year (in years):            1000.12
+   Length of day (in hours):             49.20
+
+Planet #16:
+   Distance from primary star (in A.U.): 109.010
+   Eccentricity of orbit:                0.100
+   Mass (in Earth masses):               0.001
+   Equatorial radius (in Km):            815.2
+   Density (in g/cc):                    2.187
+   Escape Velocity (in km/sec):          0.90
+   Smallest molecular weight retained:   977.34
+   Surface acceleration (in cm/sec2):    49.82
+   Surface Gravity (in Earth gees):      0.05
+   Boiling point of water (celcius):     -122.3
+   Surface temperature (Celcius):        -254.22
+   Axial tilt (in degrees):              50.903728866218735
+   Planetary albedo:                     0.150
+   Length of year (in years):            1308.03
+   Length of day (in hours):             67.90
+
+Planet #17:
+   Distance from primary star (in A.U.): 137.949
+   Eccentricity of orbit:                0.038
+   Mass (in Earth masses):               0.000
+   Equatorial radius (in Km):            406.8
+   Density (in g/cc):                    2.186
+   Escape Velocity (in km/sec):          0.45
+   Smallest molecular weight retained:   3925.42
+   Surface acceleration (in cm/sec2):    24.85
+   Surface Gravity (in Earth gees):      0.03
+   Boiling point of water (celcius):     -138.8
+   Surface temperature (Celcius):        -256.29
+   Axial tilt (in degrees):              63.9287428369818
+   Planetary albedo:                     0.147
+   Length of year (in years):            1862.08
+   Length of day (in hours):             96.13
+
+Planet #18:
+   Distance from primary star (in A.U.): 171.582
+   Eccentricity of orbit:                0.089
+   Mass (in Earth masses):               0.000
+   Equatorial radius (in Km):            69.8
+   Density (in g/cc):                    2.186
+   Escape Velocity (in km/sec):          0.08
+   Smallest molecular weight retained:   133433.42
+   Surface acceleration (in cm/sec2):    4.26
+   Surface Gravity (in Earth gees):      0.00
+   Boiling point of water (celcius):     -168.1
+   Surface temperature (Celcius):        -258.02
+   Axial tilt (in degrees):              69.51899581462804
+   Planetary albedo:                     0.148
+   Length of year (in years):            2583.02
+   Length of day (in hours):             232.13
+
