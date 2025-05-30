@@ -87,8 +87,86 @@
 \end{figure}
 \section{理论分析}
 
-\section{数值建模}
+\section{初步尝试：树算法模拟}
+\subsection{一个失败案例}
+首先尝试用最直观的方式进行模拟，将太阳静止置于坐标原点，在其周围随机形成一系列小天体，小天体初始速度维持其绕太阳做近似圆周运动，然后通过模拟观察其合并情况。\\
 
+然而，理论估计表明（详细计算可参见3.2节），如果设置小天体质量为$10^{21}$kg量级（约为地球的千分之一），天体的平均间距需要在$10^8$m及以下才能使天体间的相互作用和太阳的潮汐力达到同一量级，然而在$10^{11}$m（一个天文单位）尺度下排布如此之多的点，会带来巨大的演化开销，所以不加任何近似做全局模拟在计算代价上无法接受。\\
+
+因此，我们决定简化模型，在尽可能保留体系和外场性质的条件下，将模拟局限在一个可以接受的区域内，并借小规模模拟的结果来尝试复现行星形成过程中的一些特征。
+\subsection{区域和外场设置}
+考虑单一质点绕太阳的运动，根据能量守恒和角动量守恒可以得到其运动方程的首次积分如下：
+\begin{align*}
+    E = &\frac{1}{2}m(\dot{r}^2 + r^2\dot{\theta}^2) - \frac{GMm}{r}\\
+    L = &mr^2\dot{\theta}
+\end{align*}
+其中质点的位置用极坐标$(r,\theta)$描述，$M$和$m$分别代表中心天体和质点的质量，$E$和$L$代表能量和角动量。将切向的部分消去后得到：
+$$
+E = \frac{1}{2}m\dot{r}^2 + V(r)
+$$
+其中有效势能$V(r) = - \frac{GMm}{r}+\frac{L^2}{2mr^2}$，由此质点的运动被建模为了一个径向的单自由度问题。\\
+在小规模模拟中，为方便起见，将研究的问题设定在二维方形区域上。其中一个方向（记作$x$）和原系统中的径向对应，另一个方向（记作$y$）和原系统中的切向对应。沿$x$方向，假设每个粒子自身绕太阳的运动和小范围的相互作用彼此独立，则有效势场在局部可做二阶展开：
+$$
+V(r=r_0+x) = -\frac{GMm}{2r_0}+\frac{GMm}{r_0^3}x^2
+$$
+构成了在$x$方向对粒子的约束，迫使其保持在平衡位置附近。在$y$方向，为了模拟圆环切向的效果，添加周期边界条件，从方形一边离开的粒子会重新从对边进入。\\
+
+从而体系的运动方程为：
+\begin{align*}
+    m_i\ddot{x_i} = &-\sum_{j\neq i}\frac{Gm_im_j}{r_{ij}^3}x_i-\frac{GMm_i}{r_0^3}(x_i-x_j)\\
+    m_i\ddot{y_i} = &-\sum_{j\neq i}\frac{Gm_im_j}{r_{ij}^3}(y_i-y_j)
+\end{align*}
+其中$r_{ij}=\sqrt{(x_i-x_j)^2+(y_i-y_j)^2}$，$r_0$为一个天文单位，$M$为太阳质量。
+\subsection{相互作用的树算法加速}
+用有限差分方法求解前述系统涉及到对不同天体间引力的计算，对$N$个粒子逐个计算的复杂度为$\mathcal{O}(N^2)$。对于较大的$N$（如$10^3$量级），这个复杂度会带来过长的模拟用时。为了加速，我们采用Barnes-Hut树算法来加速引力计算，算法流程如下：\\
+\\
+1. 将区域$[x_{min}, x_{max}]\times[y_{min}, y_{max}]$按中点划分为四叉树;\\
+2. 计算每个节点对应区域的尺寸$l$与到目标点的距离$d$，如果$\frac{l}{d}<\theta$（其中$\theta$为某个给定的阈值）,按该节点的质心的位置和总质量计算引力，否则对区域进一步划分；\\
+3. 直到所有不满足前述条件的区域迭代后均包含不超过一个粒子，停止划分，并计算目标点受到的引力。\\
+
+使用这个算法后，在目标点分布较为均匀时，可以在保持一定精度的基础上使得算法具有$\mathcal{O}(N\log N)$的复杂度，从而使得我们可以在更大的体系中开展实验。
+\subsection{天体合并}
+在这一部分中，采用最简单的合成判定标准。即假设所有天体均为球形，且其密度为常数$\rho=2.5\times10^3\mathrm{kg}/\mathrm{m}^3$，当两个天体的间距小于它们的半径之和时，发生碰撞，碰撞后所得天体质量为两者之和，速度满足动量守恒定律：
+\begin{align*}
+    m'&=m_1+m_2\\
+    m'\vec{v}&=m_1\vec{v}_1+m_2\vec{v}_2
+\end{align*}
+\subsection{实验结果}
+在3.1节中提到的失败案例如下图所示：
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{images/Failure_exp.png}
+    \caption{一个失败案例示意图}
+\end{figure}
+\\
+
+这里粒子所在轨道初始半径在$0.9\sim1.1$个天文单位，实验发现，此时粒子间距过大，以至于在相当长时间内都无法发生合并。\\
+
+换用在3.2节中提出的建模方法后，得到实验结果如下图所示：
+\begin{figure}[H]
+    \centering
+    \subfigure[$N=998$]{\includegraphics[width=0.48\linewidth]{images/998.png}}
+    \subfigure[$N=802$]{\includegraphics[width=0.48\linewidth]{images/802.png}}
+    \subfigure[$N=491$]{\includegraphics[width=0.48\linewidth]{images/491.png}}
+    \subfigure[$N=247$]{\includegraphics[width=0.48\linewidth]{images/247.png}}
+    \subfigure[$N=148$]{\includegraphics[width=0.48\linewidth]{images/148.png}}
+    \subfigure[$N=82$]{\includegraphics[width=0.48\linewidth]{images/82.png}}
+    \subfigure[$N=49$]{\includegraphics[width=0.48\linewidth]{images/49.png}}
+    \subfigure[$N=16$]{\includegraphics[width=0.48\linewidth]{images/16.png}}
+    \caption{局域模拟结果示意图}
+    \label{}
+\end{figure}
+
+这里设置模拟的区域大小为$10^9$km$\times$$10^9$km，边界如前面所介绍。需要注意的是，图中圆点的大小不代表粒子的半径，仅作为直观展示其质量的方式。
+\subsection{分析与讨论}
+合成的过程可以大致分为三个阶段：
+\begin{itemize}
+    \item \textbf{初步合并阶段：}在这一阶段，在模拟区域的各处相邻的小天体逐步合并为更大的天体，但是整体还是呈现出均匀分布的状态（图中的（a）（b）（c）部分）；
+    \item \textbf{核心形成阶段：}在这一阶段，一些较大的核心逐渐开始形成，分布在系统的各个位置，并开始吸引附近的粒子，持续增大（图中的（d）（e）（f）部分）
+    \item \textbf{最终合并阶段：}在这一阶段，几乎全部合并的粒子向中心移动，并且合并为一个较大的天体，即为行星的初步形成，而周围的粒子绕其作圆周运动，成为小行星（若未被行星俘获）或者卫星（若被行星俘获）（图中的（g）（h）部分）。
+\end{itemize}
+
+\section{数值建模}
 
 \section{实验结果}
 
